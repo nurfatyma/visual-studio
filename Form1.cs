@@ -8,145 +8,62 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace calculator
+namespace button_game
 {
     public partial class Form1: Form
     {
-        int value1;
-        int value2;
-        double result = 0;
-        string sign;
-
+        int clickCount = 0;
+        int timeLeft = 60;
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button12_Click(object sender, EventArgs e)
-        {
-            textBox1.Text = textBox1.Text + '7';
-        }
-
-        private void button18_Click(object sender, EventArgs e)
-        {
-            value2= Convert.ToInt32(textBox1.Text);
-            label2.Text = textBox1.Text;
-            if (sign == "+")
-            {
-                result=value1+ value2;
-                textBox1.Text=Convert.ToString(result);
-            }
-            else if (sign == "-")
-            {
-                result = value1 - value2;
-                textBox1.Text = Convert.ToString(result);
-            }
-            else if (sign == "*")
-            {
-                result = value1 * value2;
-                textBox1.Text = Convert.ToString(result);
-            }
-            else if (sign == "/")
-            {
-                result = value1 / value2;
-                textBox1.Text = Convert.ToString(result);
-            }
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            textBox1.Text=textBox1.Text+'1';
-        }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            textBox1.Text = textBox1.Text + '2';
-        }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            textBox1.Text = textBox1.Text + '3';
-        }
+            Random rand = new Random();
 
-        private void button8_Click(object sender, EventArgs e)
-        {
-            textBox1.Text = textBox1.Text + '4';
-        }
+            int maxX = this.ClientSize.Width - button1.Width;
+            int maxY = this.ClientSize.Height - button1.Height;
 
-        private void button11_Click(object sender, EventArgs e)
-        {
-            textBox1.Text = textBox1.Text + '5';
-        }
+            int newX = rand.Next(0, maxX);
+            int newY = rand.Next(0, maxY);
 
-        private void button10_Click(object sender, EventArgs e)
-        {
-            textBox1.Text = textBox1.Text + '6';
-        }
+            button1.Location = new Point(newX, newY);
 
-        private void button7_Click(object sender, EventArgs e)
-        {
-            textBox1.Text = textBox1.Text + '8';
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            textBox1.Text = textBox1.Text + '9';
-        }
-
-        private void button15_Click(object sender, EventArgs e)
-        {
-            textBox1.Text = textBox1.Text + '0';
-        }
-
-        private void button16_Click(object sender, EventArgs e)
-        {
-            textBox1.Text = "";
-            label1.Text = "";
-            label2.Text = "";
-        }
-
-        private void button13_Click(object sender, EventArgs e)
-        {
-            value1=Convert.ToInt32(textBox1.Text);
-            sign = "+";
-            label1.Text = textBox1.Text + sign;
-            textBox1.Text = "";
+            clickCount++; // Increase by 1 on each click
+            label1.Text = "Score: " + clickCount ;
 
 
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        private void timer1_Tick(object sender, EventArgs e)
         {
+            
+        }
+
+        private void timer1_Tick_1(object sender, EventArgs e)
+        {
+
+            timeLeft--;
+
+            this.Text = "Time Left: " + timeLeft + " seconds"; // Optional: show in title bar or use a Label
+
+            if (timeLeft <= 0)
+            {
+                timer1.Stop(); // Stop timer
+                button1.Enabled = false; // Disable the button
+                MessageBox.Show("Time's up! Game over.");
+            }
+            label2.Text = "Time Left: " + timeLeft + " sec";
 
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e)
         {
-            value1 = Convert.ToInt32(textBox1.Text);
-            sign = "-";
-            label1.Text = textBox1.Text + sign;
-            textBox1.Text = "";
-        }
 
-        private void button9_Click(object sender, EventArgs e)
-        {
-            value1 = Convert.ToInt32(textBox1.Text);
-            sign = "*";
-            label1.Text = textBox1.Text + sign;
-            textBox1.Text = "";
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            value1 = Convert.ToInt32(textBox1.Text);
-            sign = "/";
-            label1.Text = textBox1.Text + sign;
-            textBox1.Text = "";
         }
     }
 }
